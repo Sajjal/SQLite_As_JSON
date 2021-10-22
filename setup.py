@@ -9,7 +9,7 @@ def readme():
         return "\n" + readme.read()
 
 
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 DESCRIPTION = 'Do SQLite CRUD operation via JSON object'
 LONG_DESCRIPTION = readme()
 

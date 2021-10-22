@@ -93,6 +93,51 @@ class ManageDB:
 
         return {"keys": keys, "values": values}
 
+    @staticmethod
+    def __get_update_string(update_config):
+        """Converts JSON object to SQL String
+        Parameters:
+            update_config (dict):The record that needs to be updated
+
+        Returns:
+            update_string (str): SQL query as string
+
+        Example:
+            __get_update_string({"greeting":"Hello", "to":"All"})
+            returns: greeting='hello', to='All'
+        """
+        update_string = ''
+        index = 0
+        for key, value in update_config.items():
+            update_string = update_string+f"{key}='{value}'," if index < len(
+                update_config)-1 else update_string+f"{key}='{value}'"
+            index = index+1
+
+        return update_string
+
+    @staticmethod
+    def __get_search_string(search_config, combine='AND'):
+        """Converts JSON object to SQL String
+        Parameters:
+            search_config (dict):The search condition that needs to be matched
+            combine (str): (optional) to join multiple search condition with either AND or OR
+
+        Returns:
+            search_string (str): SQL query as string
+
+        Example:
+            __get_search_string({"greeting":"Hello", "to":"All"})
+            returns: greeting='hello' AND to='All'
+        """
+        search_string = ''
+        index = 0
+        for key, value in search_config.items():
+            search_string = search_string+f"{key}='{value}' {combine} " if index < len(
+                search_config)-1 else search_string+f"{key}='{value}'"
+            index = index+1
+
+        return search_string
+
     def create_table(self):
         """Creates table in database as defined in database config file"""
 
@@ -143,22 +188,25 @@ class ManageDB:
             self.conn.commit()
             return({"Success": "Data Inserted"})
 
-    def search_data(self, table_name, params={}):
+    def search_data(self, table_name, params={}, combine='AND'):
         """Takes in table name and optional JSON object of data for conditional search and returns search result
         Parameters:
             table_name (str):The name of table where the data should be searched
             params (dict): (optional) JSON object to search conditionally
+            combine (str): (optional) to join multiple search condition with either AND or OR
 
         Returns:
             results (dict): Search results as a JSON object
 
         Example (params):
-             search_data('my_table', {"search": "id='55bd5301b331439fae2ba8572942ded5'"})
+             search_data('my_table', {"id":"55bd5301b331439fae2ba8572942ded5"})
         """
         results = []
         try:
             # search query
-            query = f"SELECT * from {table_name} WHERE {params['search']}" if 'search' in params else f"SELECT * from {table_name}"
+            query = f"SELECT * from {table_name} WHERE {self.__get_search_string(params, combine)}" if params != {
+            } else f"SELECT * from {table_name}"
+
             cursor = self.conn.execute(query)
             rows = cursor.fetchall()
             for element in rows:
@@ -183,12 +231,12 @@ class ManageDB:
             Success message(dict): If the update was successful else none 
 
         Example (params):
-            update_data('my_table', '6fef5f821b354c71ad97067150ec5059', {"update": "email=abc@example.com, password=hello_world"})
+            update_data('my_table', '6fef5f821b354c71ad97067150ec5059', {"email":"abc@example.com", "password":"hello_world"})
         """
 
         try:
             # update query
-            self.conn.execute(f"UPDATE {table_name} set {params['update']} where ID='{id}'")
+            self.conn.execute(f"UPDATE {table_name} set {self.__get_update_string(params)} where ID='{id}'")
         except Exception as E:
             db_logger.error('Data Update Error : ', E)
         else:

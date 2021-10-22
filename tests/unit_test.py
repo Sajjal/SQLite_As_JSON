@@ -20,14 +20,14 @@ class DB_Test(unittest.TestCase):
         self.assertEqual(insert_table_status, {"Success": "Data Inserted"})
 
     def test_search_record(self):
-        search_results = self.db.search_data('my_table', {"search": "email='a@b.com'"})
+        search_results = self.db.search_data('my_table', {"email": "a@b.com"})
         self.assertTrue(type(search_results) == list)
 
     def test_update_record(self):
         search_results = self.db.search_data('my_table')
         recordID = search_results[0]['id']
-        self.db.update_data('my_table', recordID, {"update": "email='abc@example.com'"})
-        search_results = self.db.search_data('my_table', {"search": f"id='{recordID}'"})
+        self.db.update_data('my_table', recordID, {"email": "abc@example.com"})
+        search_results = self.db.search_data('my_table', {"id": recordID})
         self.assertEqual(search_results[0]['email'], 'abc@example.com')
         os.remove("my_test_database.db")
 

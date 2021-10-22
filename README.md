@@ -105,8 +105,20 @@ I'm working on another Python project that requires me to store a very minimal a
 
   ```python
   db.search_data('my_table')
-  db.search_data('my_table', {"search": "id='55bd5301b331439fae2ba8572942ded5'"})
+  db.search_data('my_table', {"id":"55bd5301b331439fae2ba8572942ded5"})
   ```
+
+- Multiple search conditions can be passed as:
+
+  ```python
+  db.search_data('my_table', {"email":"a@b.com", "personID":"1"})
+  ```
+
+- Multiple search conditions will be joined by `AND` operator by default. It can be changed to `OR` as:
+
+```python
+  db.search_data('my_table', {"email":"a@b.com", "personID":"1"}, 'OR')
+```
 
 - Returns: Search results (dict): Search results as a JSON object
 
@@ -117,7 +129,7 @@ I'm working on another Python project that requires me to store a very minimal a
 
   ```python
   db.update_data('my_table', '55bd5301b331439fae2ba8572942ded5', {
-        "update": "email=abc@example.com,password=hello_world"
+        "email:abc@example.com","password":"hello_world"
       })
   ```
 
