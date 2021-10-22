@@ -116,9 +116,9 @@ I'm working on another Python project that requires me to store a very minimal a
 
 - Multiple search conditions will be joined by `AND` operator by default. It can be changed to `OR` as:
 
-```python
-  db.search_data('my_table', {"email":"a@b.com", "personID":"1"}, 'OR')
-```
+  ```python
+    db.search_data('my_table', {"email":"a@b.com", "personID":"1"}, 'OR')
+  ```
 
 - Returns: Search results (dict): Search results as a JSON object
 
