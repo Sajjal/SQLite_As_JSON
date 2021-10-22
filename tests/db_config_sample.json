@@ -1,0 +1,33 @@
+[{
+        "table_name": "my_table",
+        "fields": [
+            { "name": "id", "type": "char", "length": "50", "null": 0 },
+            { "name": "timestamp", "type": "char", "length": "20", "null": 0 },
+            { "name": "email", "type": "char", "length": "50", "null": 0 },
+            { "name": "password", "type": "char", "length": "50", "null": 0 },
+            { "name": "personID", "type": "char", "length": "50", "null": 0 }
+        ],
+        "config": {
+            "primary_key": "id",
+            "foreign_key": {
+                "field": "personID",
+                "reference_table": "persons",
+                "reference_table_field": "id"
+            }
+        }
+    },
+
+    {
+        "table_name": "persons",
+        "fields": [
+            { "name": "id", "type": "char", "length": "50", "null": 0 },
+            { "name": "timestamp", "type": "char", "length": "20", "null": 0 },
+            { "name": "first_name", "type": "char", "length": "20", "null": 0 },
+            { "name": "last_name", "type": "char", "length": "20", "null": 1 },
+            { "name": "address", "type": "char", "length": "100", "null": 1 }
+        ],
+        "config": {
+            "primary_key": "id"
+        }
+    }
+]
