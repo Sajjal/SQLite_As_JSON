@@ -59,7 +59,7 @@ class ManageDB:
 
         query = f"CREATE table {table_config['table_name']} ("
         for index, field in enumerate(table_config["fields"]):
-            null = '' if field['null'] == 0 else 'NOT NULL'
+            null = 'NOT NULL' if field['null'] == 0 else ''
             if index != len(table_config["fields"])-1:
                 query = query + field['name']+' '+field['type']+f"({field['length']}) {null}, "
             else:

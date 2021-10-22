@@ -4,7 +4,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/Sajjal/SQLite_As_JSON)
 ![GitHub repo size](https://img.shields.io/github/repo-size/Sajjal/SQLite_As_JSON)
 
-# SQLite_As_JSON.
+# SQLite As JSON
 
 A Python helper package to do SQLite CRUD operation via JSON object. This package is developed using Python 3 with no external dependencies.
 
@@ -116,7 +116,9 @@ I'm working on another Python project that requires me to store a very minimal a
 - Example:
 
   ```python
-  db.update_data('my_table', '55bd5301b331439fae2ba8572942ded5', {"update": "email=abc@example.com, password=hello_world"})
+  db.update_data('my_table', '55bd5301b331439fae2ba8572942ded5', {
+        "update": "email=abc@example.com,password=hello_world"
+      })
   ```
 
 - Returns: Success message(dict): If the update was successful else none
