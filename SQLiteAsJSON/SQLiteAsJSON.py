@@ -10,10 +10,10 @@ db_logger = logging.getLogger("ManageDB")
 
 
 class ManageDB:
-    """Takes in database name, and database config file path"""
+    """Takes in database name, database config file path and optional value to check same thread"""
 
-    def __init__(self, db_name, db_config_file_path):
-        self.conn = sqlite3.connect(db_name)
+    def __init__(self, db_name, db_config_file_path, same_thread=True):
+        self.conn = sqlite3.connect(db_name, check_same_thread=same_thread)
         self.db_config_file_path = db_config_file_path
         self.db_config = self.__verify_db_config()
 

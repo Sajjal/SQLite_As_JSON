@@ -76,6 +76,12 @@ I'm working on another Python project that requires me to store a very minimal a
   db = ManageDB('my_databse.db', 'db_config.json')
   ```
 
+- The default `check_same_thread` option for `SQLite` is `True`. You can set it `False` as:
+
+  ```python
+  db = ManageDB('my_databse.db', 'db_config.json', False)
+  ```
+
 #### Create table
 
 - Table can be created by calling `db.create_table()`
